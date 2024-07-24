@@ -1,16 +1,45 @@
+// contactController.js
+
+const { body, validationResult } = require("express-validator");
 const Contact = require("../model/contactModel");
 
-const createContact = async (req, res) => {
-  console.log(req.body);
-  try {
-    const { fullname, email, message, phone, address } = req.body;
+// Validation middleware for the contact creation route
+const validateContact = [
+  body("fullname")
+    .notEmpty()
+    .withMessage("Full name is required.")
+    .isLength({ max: 100 })
+    .withMessage("Full name cannot exceed 100 characters."),
+  body("email").isEmail().withMessage("Invalid email address.").normalizeEmail(),
+  body("phone")
+    .notEmpty()
+    .withMessage("Phone number is required.")
+    .matches(/^\+?[1-9]\d{1,14}$/)
+    .withMessage("Invalid phone number."),
+  body("address")
+    .notEmpty()
+    .withMessage("Address is required.")
+    .isLength({ max: 200 })
+    .withMessage("Address cannot exceed 200 characters."),
+  body("message")
+    .notEmpty()
+    .withMessage("Message is required.")
+    .isLength({ max: 500 })
+    .withMessage("Message cannot exceed 500 characters."),
+];
 
-    if (!fullname || !email || !message || !phone || !address) {
-      return res.json({
-        success: false,
-        message: "Please provide all information.",
-      });
-    }
+// Function to create a new contact
+const createContact = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.json({
+      success: false,
+      errors: errors.array(),
+    });
+  }
+
+  try {
+    const { fullname, email, phone, address, message } = req.body;
 
     const newContact = new Contact({
       fullname,
@@ -22,29 +51,40 @@ const createContact = async (req, res) => {
 
     await newContact.save();
 
-    res.json({
+    return res.json({
       success: true,
       message: "Contact created successfully",
-      data: newContact,
+      // data: newContact,
     });
   } catch (error) {
-    res.status(500).json({ message: "Signup error" });
-  }
-};
-
-const viewAllContact = async (req, res) => {
-  try {
-    const contact = await Contact.find({ isDeleted: { $ne: true } });
-    res.status(200).json({
-      success: true,
-      contact,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    console.error("Contact creation error:", error);
+    return res.json({
       success: false,
       message: "Internal server error",
     });
   }
 };
-module.exports = { createContact,viewAllContact };
+
+// Function to view all contacts
+const viewAllContact = async (req, res) => {
+  try {
+    const contacts = await Contact.find();
+    return res.json({
+      success: true,
+      data: contacts,
+    });
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+// Export the functions
+module.exports = {
+  validateContact,
+  createContact,
+  viewAllContact,
+};

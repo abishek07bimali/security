@@ -12,7 +12,7 @@ function ContactPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
-  
+
   const validateFullName = (name) => {
     const fullNameRegex = /^[a-zA-Z\s]+$/;
     return fullNameRegex.test(name);
@@ -87,11 +87,30 @@ function ContactPage() {
             message: "",
           });
         } else {
-          toast.error(response.data.message);
+          if (response.data.errors && response.data.errors.length > 0) {
+            response.data.errors.forEach((error) => {
+              toast.error(`${error.path}: ${error.msg}`);
+            });
+          } else {
+            toast.error(response.data.message || "An error occurred.");
+          }
         }
       });
     } catch (error) {
-      toast.error("An error occurred while sending the contact form.");
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 400) {
+          data.errors.forEach((error) =>
+            toast.error(`${error.path}: ${error.msg}`)
+          );
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+      } else if (error.request) {
+        toast.error("No response received from the server.");
+      } else {
+        toast.error("Error in setting up the request.");
+      }
     } finally {
       setLoading(false);
     }
