@@ -12,10 +12,10 @@ const signupUser = async (req, res) => {
   try {
     const { username, email, password, phone, address } = req.body;
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || phone || address) {
       return res
 
-        .json({ success: false, message: "Please provide username, email, and password" });
+        .json({ success: false, message: "Please provide username, email, and password, phone, address" });
     }
 
     const existingUser = await User.findOne({ email });

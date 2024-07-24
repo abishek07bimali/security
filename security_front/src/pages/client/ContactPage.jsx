@@ -11,7 +11,54 @@ function ContactPage() {
     message: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState({});
+  
+  const validateFullName = (name) => {
+    const fullNameRegex = /^[a-zA-Z\s]+$/;
+    return fullNameRegex.test(name);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\d{10}$/; // Example: 10 digit number
+    return phoneRegex.test(phone);
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.fullname) {
+      errors.fullname = "Full name is required.";
+    } else if (!validateFullName(formData.fullname)) {
+      errors.fullname = "Full name can only contain letters and spaces.";
+    }
+
+    if (!formData.email) {
+      errors.email = "Email is required.";
+    } else if (!validateEmail(formData.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.phone) {
+      errors.phone = "Phone number is required.";
+    } else if (!validatePhone(formData.phone)) {
+      errors.phone = "Phone number must be 10 digits.";
+    }
+
+    if (!formData.address) {
+      errors.address = "Address is required.";
+    }
+
+    if (!formData.message) {
+      errors.message = "Message is required.";
+    }
+
+    setError(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,8 +70,10 @@ function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     setLoading(true);
-    setError(null);
 
     try {
       createContact(formData).then((response) => {
@@ -42,7 +91,7 @@ function ContactPage() {
         }
       });
     } catch (error) {
-      setError(error.message);
+      toast.error("An error occurred while sending the contact form.");
     } finally {
       setLoading(false);
     }
@@ -67,8 +116,13 @@ function ContactPage() {
                   name="fullname"
                   value={formData.fullname}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-2 border border-[#9CA3AF] rounded-md shadow-sm focus:outline-none  "
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    error.fullname ? "border-red-500" : "border-[#9CA3AF]"
+                  } rounded-md shadow-sm focus:outline-none`}
                 />
+                {error.fullname && (
+                  <p className="text-red-500 text-sm">{error.fullname}</p>
+                )}
               </div>
               <div className="w-1/2 px-2">
                 <label
@@ -83,8 +137,13 @@ function ContactPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-2 border border-[#9CA3AF] rounded-md shadow-sm focus:outline-none  "
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    error.email ? "border-red-500" : "border-[#9CA3AF]"
+                  } rounded-md shadow-sm focus:outline-none`}
                 />
+                {error.email && (
+                  <p className="text-red-500 text-sm">{error.email}</p>
+                )}
               </div>
             </div>
             <div className="flex flex-wrap -mx-2">
@@ -101,8 +160,13 @@ function ContactPage() {
                   name="address"
                   value={formData.address}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-2 border border-[#9CA3AF] rounded-md shadow-sm focus:outline-none  "
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    error.address ? "border-red-500" : "border-[#9CA3AF]"
+                  } rounded-md shadow-sm focus:outline-none`}
                 />
+                {error.address && (
+                  <p className="text-red-500 text-sm">{error.address}</p>
+                )}
               </div>
               <div className="w-1/2 px-2">
                 <label
@@ -117,8 +181,13 @@ function ContactPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-2 border border-[#9CA3AF] rounded-md shadow-sm focus:outline-none  "
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    error.phone ? "border-red-500" : "border-[#9CA3AF]"
+                  } rounded-md shadow-sm focus:outline-none`}
                 />
+                {error.phone && (
+                  <p className="text-red-500 text-sm">{error.phone}</p>
+                )}
               </div>
             </div>
             <div>
@@ -134,13 +203,18 @@ function ContactPage() {
                 value={formData.message}
                 onChange={handleChange}
                 rows="4"
-                className="mt-1 block w-full px-3 py-2 border border-[#9CA3AF] rounded-md shadow-sm focus:outline-none  "
+                className={`mt-1 block w-full px-3 py-2 border ${
+                  error.message ? "border-red-500" : "border-[#9CA3AF]"
+                } rounded-md shadow-sm focus:outline-none`}
               ></textarea>
+              {error.message && (
+                <p className="text-red-500 text-sm">{error.message}</p>
+              )}
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 bg-[#F23F2D] "
+              className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 bg-[#F23F2D]"
             >
               {loading ? "Sending..." : "Send"}
             </button>
@@ -154,7 +228,7 @@ function ContactPage() {
               <img
                 src="/images/logo/logo.png"
                 alt=""
-                className="w-[105px] h-[105px] pr-3  top-0"
+                className="w-[105px] h-[105px] pr-3 top-0"
               />
               <div className="font-semibold">
                 <p>Kathmandu, Nepal</p>
@@ -168,10 +242,9 @@ function ContactPage() {
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d964.3582239122129!2d85.32939060263661!3d27.70618250126379!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb190a74aa1f23%3A0x74ebef82ad0e5c15!2sSoftwarica%20College%20of%20IT%20and%20E-Commerce!5e0!3m2!1sen!2snp!4v1719284741307!5m2!1sen!2snp"
                 width="700"
                 height="250"
-                // style="border:0;"
-                allowfullscreen=""
+                allowFullScreen=""
                 loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
+                referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
           </div>
