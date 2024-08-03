@@ -8,6 +8,16 @@ const cloudinary = require("cloudinary").v2;
 
 const app = express();
 
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+    key: fs.readFileSync('/home/kali/Desktop/security/security_back/server.key'),
+    cert: fs.readFileSync('/home/kali/Desktop/security/security_back/server.crt'),
+}
+
+
+
 dbConnect();
 const corsPolicy = {
   origin: process.env.FRONTEND_URL || "*",
@@ -67,7 +77,7 @@ app.use((req, res, next) => {
     });
 });
 
-app.listen(PORT, () => {
+https.createServer(options, app).listen(PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
 
