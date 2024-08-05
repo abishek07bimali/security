@@ -6,6 +6,9 @@ const sendOTP = require("./otpControllers");
 const multer = require('multer');
 const cloudinary = require("cloudinary").v2;
 const nodemailer = require("nodemailer");
+const otpController = require("../controllers/otpControllers");
+const OTP = require("../model/otpModel");
+
 
 // Create a nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -35,26 +38,57 @@ const sendMessage = async (email) => {
 };
 
 
-//http://localhost:5000/api/user/signup
 const signupUser = async (req, res) => {
   console.log(req.body);
   try {
     const { username, email, password, phone, address } = req.body;
 
-    if (!username || !email || !password || phone || address) {
-      return res
-
-        .json({ success: false, message: "Please provide username, email, and password, phone, address" });
+    if (!username || !email || !password || !phone || !address) {
+      return res.json({
+        success: false,
+        message: "Please provide username, email, password, phone, and address",
+      });
     }
 
-    const existingUser = await User.findOne({ email });
+    // Check if the user already exists and is verified
+    const existingUser = await User.findOne({ email, isVerified: true });
     if (existingUser) {
-      return res
-        .json({ success: false, message: "User with this email already exists" });
+      return res.json({
+        success: false,
+        message: "User with this email already exists",
+      });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Check if the user exists but is not verified
+    const unverifiedUser = await User.findOne({ email, isVerified: false });
+    if (unverifiedUser) {
+      // Update the existing unverified user with the new details
+      unverifiedUser.username = username;
+      unverifiedUser.phone = phone;
+      unverifiedUser.address = address;
+      unverifiedUser.password = await bcrypt.hash(password, 10);
 
+      // Save the updated unverified user
+      await unverifiedUser.save();
+
+      // Generate a new OTP and save it to the database
+      const otp = Math.floor(1000 + Math.random() * 9000).toString();
+      const timestamp = Date.now();
+      const newOTP = new OTP({ email, otp, timestamp });
+      await newOTP.save();
+
+      // Send OTP for verification
+      await otpController.sendOTPRegistration(email, otp);
+
+      return res.json({
+        success: true,
+        message: "User details updated successfully. Please check email for OTP verification",
+        data: unverifiedUser,
+      });
+    }
+
+    // Create a new user if the email does not exist
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
       email,
@@ -65,15 +99,26 @@ const signupUser = async (req, res) => {
 
     await newUser.save();
 
-    res.json({
+    // Generate and save the OTP for the new user
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    const timestamp = Date.now();
+    const newOTP = new OTP({ email, otp, timestamp });
+    await newOTP.save();
+
+    // Send OTP for verification
+    await otpController.sendOTPRegistration(email, otp);
+
+    return res.json({
       success: true,
-      message: "User created successfully",
+      message: "User created successfully. Please check email for OTP verification",
       data: newUser,
     });
   } catch (error) {
-    res.status(500).json({ message: "Signup error" });
+    console.error("Signup error:", error);
+    return res.status(500).json({ message: "Signup error" });
   }
 };
+
 
 //http://localhost:5000/api/user/login
 
@@ -88,10 +133,10 @@ const loginUser = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email }).populate(
+    const user = await User.findOne({ email, isVerified: { $ne: true }  }).populate(
       "favoriteCompanies favoriteNews.newsId employeeOf reviews.companyId connections"
     );
-
+  
     if (!user) {
       return res.json({ success: false, message: "Invalid credentials" });
     }
@@ -285,6 +330,7 @@ const savePassowrd = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
 
 const checkAdmin = (req, res) => {
   // console.log(req.user)

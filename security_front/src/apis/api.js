@@ -81,6 +81,7 @@ export const verifyEmailForget = (data) =>
 export const verifyOTPForget = (data) => Api.post("/api/user/verify-otp", data);
 export const ResetPassword = (data) =>
   Api.post("/api/user/reset-password", data);
+export const verifyUserAccount = (data) => Api.post("/api/user/verify_creation", data);
 
 // export const CheckAdmin= ()=>{
 //   Api.post

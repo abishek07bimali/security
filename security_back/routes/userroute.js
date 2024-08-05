@@ -8,6 +8,7 @@ const { authGuard, authGuardAdmin,forgotPasswordLimiter } = require("../middlewa
 
 router.post("/login", userController.loginUser);
 router.post("/signup", userController.signupUser);
+router.post('/verify_creation', otpController.verifyUser);
 router.post("/updateuser",authGuard, userController.updateUser);
 router.post("/deleteuser",authGuard, userController.deleteUser);
 
@@ -21,6 +22,8 @@ router.get("/viewallconnections", connectionController.viewAllConnections);
 
 
 router.get("/check-admin", authGuardAdmin, userController.checkAdmin);
+
+
 
 
 module.exports = router;
