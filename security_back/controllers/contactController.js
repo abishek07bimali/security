@@ -3,7 +3,7 @@
 const { body, validationResult } = require("express-validator");
 const Contact = require("../model/contactModel");
 
-// Validation middleware for the contact creation route
+// Validation middleware for the contact creation 
 const validateContact = [
   body("fullname")
     .notEmpty()

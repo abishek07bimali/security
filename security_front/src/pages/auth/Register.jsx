@@ -14,7 +14,7 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isOTPModalOpen, setIsOTPModalOpen] = useState(true);
+  const [isOTPModalOpen, setIsOTPModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [OTP, setOTP] = useState("");

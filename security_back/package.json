@@ -7,7 +7,7 @@
     "start": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Suraj Rimal & Abishek Bimali",
+  "author": "Abishek Bimali",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

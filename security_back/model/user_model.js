@@ -4,8 +4,17 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
   username: { type: String, required: true }, // firstname and lastname
-  email: { type: String, required: true, unique: true }, //email {unique}
-  password: { type: String, required: true },  //hashed password {bcrypt}
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); // Email format validation
+      },
+      message: props => `${props.value} is not a valid email address!`
+    }
+  },  password: { type: String, required: true },  //hashed password {bcrypt}
   phone:{ type: String},
   address:{ type: String},
   loginAttempt: { type: Number, default: 0 },
