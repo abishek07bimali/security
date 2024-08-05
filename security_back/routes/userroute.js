@@ -20,7 +20,6 @@ router.post('/reset-password', userController.savePassowrd);
 router.post("/createconnection", authGuard, connectionController.createConnection);
 router.get("/viewallconnections", connectionController.viewAllConnections);
 
-
 router.get("/check-admin", authGuardAdmin, userController.checkAdmin);
 
 
