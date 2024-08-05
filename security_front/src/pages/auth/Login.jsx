@@ -298,10 +298,10 @@ const Login = () => {
               className="w-full px-4 py-2 mb-4 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
               required
             />
-            {/* <ReCAPTCHA
+            <ReCAPTCHA
               sitekey="6LeDwR4qAAAAAPcoRF7ahbTbetwB01Y2aRvwvMve"
               onChange={handleCaptchaChange}
-            /> */}
+            />
             <button
               onClick={handleVerifyClick}
               className={`w-full py-2 ${
