@@ -80,5 +80,20 @@ const newAuthGuard = (req, res, next) => {
     }
 };
 
+const rateLimit = require('express-rate-limit');
 
-module.exports = { authGuard, authGuardAdmin,newAuthGuard };
+  
+const forgotPasswordLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 3, 
+    handler: (req, res) => {
+      res.json({
+        success: false,
+        message: 'Too many password reset attempts from this IP, please try again after 15 minutes',
+      });
+    },
+  });
+  
+
+
+module.exports = { authGuard, authGuardAdmin,newAuthGuard,forgotPasswordLimiter };

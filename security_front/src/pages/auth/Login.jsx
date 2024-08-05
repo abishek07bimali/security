@@ -7,6 +7,7 @@ import {
   verifyOTPForget,
 } from "../../apis/api";
 import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Login = () => {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
@@ -24,6 +25,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   const handleForgotPasswordClick = (event) => {
     event.preventDefault();
@@ -50,12 +52,16 @@ const Login = () => {
 
   const validatePassword = (password) => {
     // Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     return passwordRegex.test(password);
   };
 
   const handleVerifyClick = async () => {
+    if (!captchaToken) {
+      toast.error("Please complete the CAPTCHA");
+      return;
+    }
+
     setIsLoading(true);
     try {
       const response = await verifyEmailForget({ email });
@@ -183,6 +189,11 @@ const Login = () => {
     if (isNaN(element.value)) return false;
     setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
   };
+
+  const handleCaptchaChange = (token) => {
+    setCaptchaToken(token);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-2 sm:p-6 lg:p-8">
       <div className="bg-white p-8 rounded-lg shadow-md xss:w-full sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 border border-black">
@@ -287,6 +298,10 @@ const Login = () => {
               className="w-full px-4 py-2 mb-4 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
               required
             />
+            {/* <ReCAPTCHA
+              sitekey="6LeDwR4qAAAAAPcoRF7ahbTbetwB01Y2aRvwvMve"
+              onChange={handleCaptchaChange}
+            /> */}
             <button
               onClick={handleVerifyClick}
               className={`w-full py-2 ${

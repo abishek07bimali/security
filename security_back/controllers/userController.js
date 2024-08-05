@@ -5,6 +5,35 @@ const jwt = require("jsonwebtoken");
 const sendOTP = require("./otpControllers");
 const multer = require('multer');
 const cloudinary = require("cloudinary").v2;
+const nodemailer = require("nodemailer");
+
+// Create a nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.email,
+    pass: process.env.email_app_password,
+  },
+});
+
+// Function to send message
+const sendMessage = async (email) => {
+  const mailOptions = {
+    from: process.env.email,
+    to: email,
+    subject:"Account Locked",
+    text:"Account locked due to multiple failed login attempts. Try again in 24 hours.",
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("OTP sent successfully");
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+    throw new Error("Failed to send OTP");
+  }
+};
+
 
 //http://localhost:5000/api/user/signup
 const signupUser = async (req, res) => {
@@ -49,6 +78,7 @@ const signupUser = async (req, res) => {
 //http://localhost:5000/api/user/login
 
 const loginUser = async (req, res) => {
+  
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -59,22 +89,52 @@ const loginUser = async (req, res) => {
     }
 
     const user = await User.findOne({ email }).populate(
-      "favroiteCompanies favroiteNews.newsId employeeOf reviews.companyId connections"
+      "favoriteCompanies favoriteNews.newsId employeeOf reviews.companyId connections"
     );
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user) {
       return res.json({ success: false, message: "Invalid credentials" });
     }
 
+    // Check if the account is locked
+    if (user.lockUntil && user.lockUntil > Date.now()) {
+      return res.json({
+        success: false,
+        message: "Account locked. Try again later.",
+      });
+    }
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      user.loginAttempt = user.loginAttempt + 1;
+
+      if (user.loginAttempt >= 3) {
+        user.lockUntil = Date.now() + 24 * 60 * 60 * 1000;
+        await user.save();
+        await sendMessage(user.email)
+        return res.json({
+          success: false,
+          message: "Account locked due to multiple failed login attempts. Try again in 24 hours.",
+        });
+      } else {
+        await user.save();
+        return res.json({ success: false, message: "Invalid credentials" });
+      }
+    }
+
+    // Reset login attempts on successful login
+    user.loginAttempt = 0;
+    user.lockUntil = undefined;
+    await user.save();
+
     const token = jwt.sign(
-      { email: user.email, isAdmin: user.isAdmin,_id:user._id },
+      { email: user.email, isAdmin: user.isAdmin, _id: user._id },
       process.env.JWT_TOKEN_SECRET,
       { expiresIn: process.env.JWT_EXPIRY_TIME }
     );
     // Remove password from the user object
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
-    //delete userWithoutPassword._id; yo cahixa app ma so enabling this
+
     res.json({
       success: true,
       message: "Login success",
@@ -86,6 +146,7 @@ const loginUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Login error" });
   }
 };
+
 
 //works
 //http://localhost:5000/api/user/updateuser

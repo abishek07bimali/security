@@ -8,15 +8,13 @@ const cloudinary = require("cloudinary").v2;
 
 const app = express();
 
-const https = require('https');
-const fs = require('fs');
+const https = require("https");
+const fs = require("fs");
 
 const options = {
-    key: fs.readFileSync('/home/kali/Desktop/security/security_back/server.key'),
-    cert: fs.readFileSync('/home/kali/Desktop/security/security_back/server.crt'),
-}
-
-
+  key: fs.readFileSync("server.key"),
+  cert: fs.readFileSync("server.crt"),
+};
 
 dbConnect();
 const corsPolicy = {
@@ -51,7 +49,6 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-
 const PORT = process.env.PORT;
 app.get("/", (req, res) => {
   res.send("BusinessOne API Has been started");
@@ -69,15 +66,14 @@ app.use("/api/contact", require("./routes/contactRoute"));
 app.use("/api/faq", require("./routes/faqRoute"));
 
 app.use((req, res, next) => {
-  res
-    .status(404)
-    .json({
-      error: "Not Found",
-      message: "The requested resource was not found on this server.",
-    });
+  res.status(404).json({
+    error: "Not Found",
+    message: "The requested resource was not found on this server.",
+  });
 });
 
-https.createServer(options, app).listen(PORT, () => {
+// https.createServer(options, app).listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
 

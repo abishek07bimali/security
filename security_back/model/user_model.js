@@ -8,6 +8,9 @@ const userSchema = new Schema({
   password: { type: String, required: true },  //hashed password {bcrypt}
   phone:{ type: String},
   address:{ type: String},
+  loginAttempt: { type: Number, default: 0 },
+  isLocked: { type: Boolean, default: false },
+  lockUntil: { type: Date },
   bio: String, //bio of the user
   darkmode: { type: Boolean, default: false }, //darkmode true or false
   workDomain: String, //domain of the user sector eg: "Healthcare", "Education", "Construction & Real estate"
