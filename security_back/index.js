@@ -3,6 +3,7 @@ const path = require("path");
 const dbConnect = require("./database/db");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 
@@ -33,6 +34,22 @@ const corsPolicy = {
 };
 
 app.use(cors(corsPolicy));
+// app.use(
+//   helmet({
+//       contentSecurityPolicy: {
+//           directives: {
+//               defaultSrc: ["'self'"],
+//               scriptSrc: ["'self'"],
+//               styleSrc: ["'self'", "'unsafe-inline'"],
+//               imgSrc: ["'self'", "*", "data:"], // Allow images from all sources
+//               connectSrc: ["'self'"],
+//               fontSrc: ["'self'", "*"],
+//               objectSrc: ["'none'"],
+//               upgradeInsecureRequests: [],
+//           },
+//       },
+//   })
+// );
 
 app.use(express.json());
 app.use(bodyParser.json());
