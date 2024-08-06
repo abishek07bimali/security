@@ -133,9 +133,10 @@ const loginUser = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email, isVerified: { $ne: true }  }).populate(
-      "favoriteCompanies favoriteNews.newsId employeeOf reviews.companyId connections"
-    );
+    const user = await User.findOne({ email, isVerified: { $ne: true }  })
+    // .populate(
+    //   "favoriteCompanies favoriteNews.newsId employeeOf reviews.companyId connections"
+    // );
   
     if (!user) {
       return res.json({ success: false, message: "Invalid credentials" });
