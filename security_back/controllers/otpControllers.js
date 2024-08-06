@@ -26,7 +26,7 @@ const sendOTPRegistration = async (email, otp) => {
     from: process.env.email,
     to: email,
     subject: "OTP for Email Verification",
-    text: `Your OTP for Verification of email address is: ${otp}`,
+    text: `Your OTP for Verification of email address is: ${otp}. This email is valid for 5 minutes only.`,
   };
 
   try {
