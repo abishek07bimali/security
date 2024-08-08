@@ -15,7 +15,7 @@ const AdminViewContact = () => {
   const fetchBlogs = () => {
     getAllContact()
       .then((response) => {
-        setSavedContent(response?.data.contact);
+        setSavedContent(response?.data.data);
       })
       .catch((error) => {
         console.error("Error fetching blogs:", error);

@@ -1,4 +1,4 @@
-
+const User = require("../model/user_model");
 const jwt = require('jsonwebtoken');
 
 const authGuard = (req, res, next) => {
@@ -25,7 +25,7 @@ const authGuard = (req, res, next) => {
 
 //for admins
 
-const authGuardAdmin = (req, res, next) => {
+const authGuardAdmin = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     // console.log(authHeader)
 
@@ -43,12 +43,17 @@ const authGuardAdmin = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-        req.user = decoded;
+        const user = await User.findById(decoded._id); // Fetch the user by ID
 
-        if (!req.user.isAdmin) {
+        if (!user) {
+            return res.status(401).json({ success: "false", message: "User not found" });
+        }
+
+        if (!user.isAdmin) {
             return res.status(403).json({ success: "false", message: "Access denied: admin privileges required" });
         }
-        req.user = decoded; 
+
+        req.user = user; // Assign the full user object to req.user
         next();
     } catch (error) {
         return res.status(401).json({ success: "false", message: "Invalid authentication token" });
