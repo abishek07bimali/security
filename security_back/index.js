@@ -6,6 +6,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
+const mongoSanitize = require("express-mongo-sanitize");
+
 
 const app = express();
 
@@ -34,6 +36,8 @@ const corsPolicy = {
 };
 
 app.use(cors(corsPolicy));
+app.use(mongoSanitize());
+
 // app.use(
 //   helmet({
 //       contentSecurityPolicy: {
