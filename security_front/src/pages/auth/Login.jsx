@@ -57,10 +57,10 @@ const Login = () => {
   };
 
   const handleVerifyClick = async () => {
-    if (!captchaToken) {
-      toast.error("Please complete the CAPTCHA");
-      return;
-    }
+    // if (!captchaToken) {
+    //   toast.error("Please complete the CAPTCHA");
+    //   return;
+    // }
 
     setIsLoading(true);
     try {

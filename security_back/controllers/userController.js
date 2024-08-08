@@ -25,7 +25,7 @@ const sendMessage = async (email) => {
     from: process.env.email,
     to: email,
     subject:"Account Locked",
-    text:"Account locked due to multiple failed login attempts. Try again in 24 hours.",
+    text:"Account locked due to multiple failed login attempts. Try again in 10 minutes.",
   };
 
   try {
@@ -155,12 +155,12 @@ const loginUser = async (req, res) => {
       user.loginAttempt = user.loginAttempt + 1;
 
       if (user.loginAttempt >= 3) {
-        user.lockUntil = Date.now() + 1 * 60 * 60 * 1000;
+        user.lockUntil = Date.now() + 10 * 60 * 1000;
         await user.save();
         await sendMessage(user.email)
         return res.json({
           success: false,
-          message: "Account locked due to multiple failed login attempts. Try again in 24 hours.",
+          message: "Account locked due to multiple failed login attempts. Try again in 10 minutes.",
         });
       } else {
         await user.save();
