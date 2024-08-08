@@ -89,8 +89,8 @@ app.use((req, res, next) => {
   });
 });
 
-// https.createServer(options, app).listen(PORT, () => {
-app.listen(PORT, () => {
+https.createServer(options, app).listen(PORT, () => {
+// app.listen(PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
 
