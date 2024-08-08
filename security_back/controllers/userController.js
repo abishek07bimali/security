@@ -88,6 +88,7 @@ const signupUser = async (req, res) => {
     }
 
     // Create a new user if the email does not exist
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
@@ -133,7 +134,7 @@ const loginUser = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email, isVerified: { $ne: true }  })
+    const user = await User.findOne({  email, isVerified: true   })
     // .populate(
     //   "favoriteCompanies favoriteNews.newsId employeeOf reviews.companyId connections"
     // );
@@ -154,7 +155,7 @@ const loginUser = async (req, res) => {
       user.loginAttempt = user.loginAttempt + 1;
 
       if (user.loginAttempt >= 3) {
-        user.lockUntil = Date.now() + 24 * 60 * 60 * 1000;
+        user.lockUntil = Date.now() + 1 * 60 * 60 * 1000;
         await user.save();
         await sendMessage(user.email)
         return res.json({

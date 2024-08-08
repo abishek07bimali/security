@@ -25,7 +25,6 @@ const AdminRoutes = () => {
 
         const data = await response.json();
         if (!data.isAdmin) {
-          // throw new Error("Not admin");
           return null 
         }
         

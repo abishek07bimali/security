@@ -52,7 +52,7 @@ const Login = () => {
 
   const validatePassword = (password) => {
     // Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{2,}$/;
     return passwordRegex.test(password);
   };
 
@@ -136,14 +136,14 @@ const Login = () => {
       setEmailError("");
     }
 
-    if (!isPasswordValid) {
-      setPasswordError(
-        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character."
-      );
-      return;
-    } else {
-      setPasswordError("");
-    }
+    // if (!isPasswordValid) {
+    //   setPasswordError(
+    //     "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character."
+    //   );
+    //   return;
+    // } else {
+    //   setPasswordError("");
+    // }
 
     setIsLoading(true);
     try {
@@ -299,10 +299,11 @@ const Login = () => {
               className="w-full px-4 py-2 mb-4 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
               required
             />
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey="6LeDwR4qAAAAAPcoRF7ahbTbetwB01Y2aRvwvMve"
               onChange={handleCaptchaChange}
-            />
+              
+            /> */}
             <button
               onClick={handleVerifyClick}
               className={`w-full py-2 ${
