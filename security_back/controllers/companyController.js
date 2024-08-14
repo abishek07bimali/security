@@ -1,12 +1,68 @@
 const { json } = require("express");
 const Company = require("../model/company_model");
 const User = require("../model/user_model");
-
+const Joi = require('joi');
 
 const createCompany = async (req, res) => {
   console.log(req.body);
   console.log(req.files);
+
+  // Define the Joi schema
+  const schema = Joi.object({
+    companyBasicDetails: Joi.object({
+      name: Joi.string().required(),
+      address: Joi.string().required(),
+      email: Joi.string().email().required(),
+      phone: Joi.string().required(),
+      category: Joi.string().required(),
+      companyDescription: Joi.string().required(),
+      extendedDate: Joi.date().optional(),
+      contentData: Joi.string().optional(),
+      website: Joi.string().uri().required(),
+      registration: Joi.string().required(),
+      facebook: Joi.string().uri().optional()
+    }).required(),
+    companyProductDetails: Joi.object({
+      products: Joi.array().items(
+        Joi.object({
+          name: Joi.string().required(),
+          description: Joi.string().required(),
+          image: Joi.string().optional().allow(null)
+        })
+      ).required()
+    }).required(),
+    companyTimelineDetails: Joi.object({
+      timelines: Joi.array().items(
+        Joi.object({
+          name: Joi.string().required(),
+          date: Joi.date().required(),
+          description: Joi.string().required(),
+          image: Joi.string().optional().allow(null)
+        })
+      ).required()
+    }).required(),
+    companyFundingDetails: Joi.object({
+      fundings: Joi.array().items(
+        Joi.object({
+          name: Joi.string().required(),
+          date: Joi.date().required(),
+          amount: Joi.number().required(),
+          description: Joi.string().required()
+        })
+      ).required()
+    }).required(),
+    companyDetails: Joi.object({
+      basicDescription: Joi.string().required(),
+    }).required(),
+    targetMarketDetail: Joi.object({
+      marketDescription: Joi.string().required(),
+      businesstype: Joi.string().required(),
+      revenueStream: Joi.string().required(),
+    }).required()
+  });
+
   try {
+
     // Parse JSON fields
     const companyBasicDetails = JSON.parse(req.body.companyBasicDetails);
     const companyProductDetails = JSON.parse(req.body.companyProductDetails);
@@ -14,6 +70,12 @@ const createCompany = async (req, res) => {
     const companyFundingDetails = JSON.parse(req.body.companyFundingDetails);
     const companyDetails = JSON.parse(req.body.companyDetails);
     const targetMarketDetail = JSON.parse(req.body.targetMarketDetail);
+
+         // Validate the request body against the schema
+     const { error } = schema.validate(req.body);
+     if (error) {
+       return res.status(400).send(error.details);
+     }
 
     // Add image URLs to the parsed JSON objects
     if (req.files["companyImage"]) {
