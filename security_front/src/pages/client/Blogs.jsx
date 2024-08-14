@@ -100,7 +100,7 @@ const AddBlogs = () => {
 
   return (
     <>
-      <div className="bg-[#3E485B] min-h-[60vh] md:min-h-[60vh] font-[Cambria] flex justify-center items-center">
+      <div className="bg-[#a5b4fc] min-h-[60vh] md:min-h-[60vh] font-[Cambria] flex justify-center items-center">
         <div className="flex flex-col justify-center items-center text-center sm:px-2 xs:p-3">
           <div className="mb-4">
             <h3 className="font-[Poppins] text-white font-medium">
@@ -125,13 +125,13 @@ const AddBlogs = () => {
             />
           </div>
           {user && company ? (
-            <Link className="w-full md:w-1/2 sm:w-1/2 py-2 bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:bg-red-600">
+            <Link className="w-full md:w-1/2 sm:w-1/2 py-2 bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:bg-green-600">
               Explore the site<i className="fa-solid fa-globe pl-2"></i>
             </Link>
           ) : (
             <Link
               to={"/add-company-form"}
-              className="w-full md:w-1/2 sm:w-1/2 py-2 bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              className="w-full md:w-1/2 sm:w-1/2 py-2 bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:bg-green-600"
             >
               List Your Company <i className="fa-solid fa-globe pl-2"></i>
             </Link>
@@ -195,7 +195,7 @@ const AddBlogs = () => {
                   key={filter}
                   className={`text-center pt-1 pb-1 p-3 border-2 rounded-[50px] m-1 ${
                     selectedFilters.includes(filter)
-                      ? "border-[#EF4136] bg-[#EF4136] text-white"
+                      ? "border-[#22c55e] bg-[#22c55e] text-white"
                       : "border-[#7c8392] text-[#21243D]"
                   }`}
                   onClick={() => handleFilterClick(filter)}
@@ -215,7 +215,7 @@ const AddBlogs = () => {
                   key={filter}
                   className={`text-center pt-1 pb-1 p-3 border-2 rounded-[50px] m-1 ${
                     selectedFilters.includes(filter)
-                      ? "border-[#EF4136] bg-[#EF4136] text-white"
+                      ? "border-[#22c55e] bg-[#22c55e] text-white"
                       : "border-[#7c8392] text-[#21243D]"
                   }`}
                   onClick={() => handleFilterAuthorsClick(filter)}
@@ -235,7 +235,7 @@ const AddBlogs = () => {
                   key={filter._id} // Using _id as the key
                   className={`text-center pt-1 pb-1 p-3 border-2 rounded-[50px] m-1 ${
                     selectedFilters.includes(filter.workDomain)
-                      ? "border-[#EF4136] bg-[#EF4136] text-white"
+                      ? "border-[#22c55e] bg-[#22c55e] text-white"
                       : "border-[#7c8392] text-[#21243D]"
                   }`}
                   onClick={() => handleFilterAuthorsClick(filter.workDomain)}
@@ -253,7 +253,7 @@ const AddBlogs = () => {
             <div className="flex flex-wrap items-center pb-3">
               <FontAwesomeIcon
                 icon={faNewspaper}
-                className="pt-1 mr-2 bg-[#F23F2D] text-white p-1 text-[15px] font-bold rounded-full items-center"
+                className="pt-1 mr-2 bg-[#22c55e] text-white p-1 text-[15px] font-bold rounded-full items-center"
               />
               <button className="font-bold text-[17px]">Featured</button>
             </div>
@@ -281,7 +281,7 @@ const AddBlogs = () => {
                       {blog.title}
                     </p>
                     <h4 className="font-[Inter] text-[14px] mb-3 mt-4">
-                      <span className="bg-[#FFF5F4] text-[#F23F2D] pl-1 pr-1 p-1 rounded-sm uppercase">
+                      <span className="bg-[#FFF5F4] text-[#22c55e] pl-1 pr-1 p-1 rounded-sm uppercase">
                         {Array.isArray(blog.tags)
                           ? blog.tags.join(", ")
                           : blog.tags}

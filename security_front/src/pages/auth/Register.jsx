@@ -123,7 +123,7 @@ const Register = () => {
             alt="VentureLed Logo"
             className="w-16 h-16"
           />
-          <h1 className="text-2xl font-bold text-red-500">VentureLed</h1>
+          <h1 className="text-2xl font-bold text-green-500">VentureLed</h1>
         </div>
         <h2 className="text-xl font-semibold text-center mb-6">
           Get Started with Ventureled
@@ -172,12 +172,12 @@ const Register = () => {
             value={formData.password}
             onChange={handleChange}
             className={`w-full px-4 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1 ${
-              passwordError ? "border-red-500" : ""
+              passwordError ? "border-green-500" : ""
             }`}
             required
           />
           {passwordError && (
-            <p className="text-red-500 text-center mt-1">{passwordError}</p>
+            <p className="text-green-500 text-center mt-1">{passwordError}</p>
           )}
           {/* <div className="flex items-center"> */}
           {/* <input type="checkbox" id="remember" className="mr-2" />
@@ -187,19 +187,19 @@ const Register = () => {
           </div> */}
           <button
             type="submit"
-            className="w-1/3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-1 mx-auto block text-[20px]"
+            className="w-1/3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-1 mx-auto block text-[20px]"
             disabled={loading}
           >
             {loading ? "Signing up..." : "Signup"}
           </button>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+          {error && <p className="text-green-500 text-center mt-4">{error}</p>}
           <p className="font-normal text-center mt-4">
             By signing up, I agree to the{" "}
-            <a href="#" className="text-red-500 font-semibold">
+            <a href="#" className="text-green-500 font-semibold">
               Terms of Use
             </a>{" "}
             and{" "}
-            <a href="#" className="text-red-500 font-semibold">
+            <a href="#" className="text-green-500 font-semibold">
               Privacy Policy
             </a>
           </p>
@@ -207,7 +207,7 @@ const Register = () => {
         <div className="flex justify-center items-center mt-4 text-sm">
           <span className="text-[15px]">
             Already have an account?{" "}
-            <a href="/login" className="text-red-500 font-semibold">
+            <a href="/login" className="text-green-500 font-semibold">
               Login
             </a>
           </span>
@@ -244,7 +244,7 @@ const Register = () => {
               onClick={handleVerifyClick}
               className={`w-full py-2 ${
                 OTP
-                  ? "bg-red-500 hover:bg-red-600"
+                  ? "bg-green-500 hover:bg-green-600"
                   : "bg-gray-300 cursor-not-allowed"
               } text-white rounded-md focus:outline-none focus:ring-1 mb-2`}
               disabled={!OTP || isLoading}

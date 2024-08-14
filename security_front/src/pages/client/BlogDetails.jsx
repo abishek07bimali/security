@@ -60,7 +60,7 @@ const BlogDetails = () => {
       <div className="lg:w-4/6 md:w-full lg:pl-[10px] md:pl-[10px] py-16 xs:px-[20px] xss:px-[10px] justify-items-center">
         <div className="bg-white rounded-md p-4 justify-center">
           <div className="pt-4 md:w-4/4 items-stretch flex-col text-center">
-            <h2 className="capitalize font-bold font-[Poppins] md:text-[45px] hover:text-[#F23F2D] xss:text-[25px]">
+            <h2 className="capitalize font-bold font-[Poppins] md:text-[45px] hover:text-[#22c55e] xss:text-[25px]">
               {blogData.title}
             </h2>
             <p className="font-light font-[poppins] text-[17px] pt-4">
@@ -81,7 +81,7 @@ const BlogDetails = () => {
                     year: "numeric", // Display the year
                   })}
                 </h6>
-                <h6 className="font-light font-[poppins] text-[12px] pr-2 text-[#F23F2D]">
+                <h6 className="font-light font-[poppins] text-[12px] pr-2 text-[#22c55e]">
                   , {blogData.readingTime} min Read
                 </h6>
               </div>

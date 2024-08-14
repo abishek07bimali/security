@@ -24,7 +24,7 @@ const Support = () => {
           </label>
           <button
         //   onClick={handleSave}
-          className="bg-[#F23F2D]  text-white px-4 py-2 rounded-md mt-2 w-full"
+          className="bg-[#22c55e]  text-white px-4 py-2 rounded-md mt-2 w-full"
         >
           Add Blogs
         </button>

@@ -155,7 +155,7 @@ const AddBlogs = ({ onBlogAdded }) => {
       </div>
       <button
         onClick={handleSave}
-        className="bg-[#F23F2D] text-white px-4 py-2 rounded-md mt-2 md:col-span-2"
+        className="bg-[#22c55e] text-white px-4 py-2 rounded-md mt-2 md:col-span-2"
       >
         Add Blogs
       </button>

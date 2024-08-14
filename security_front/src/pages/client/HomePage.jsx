@@ -26,7 +26,7 @@ const HomePage = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredCompanies = getAllCompany.filter((company) =>
+  const filtegreenCompanies = getAllCompany.filter((company) =>
     company.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   useEffect(() => {
@@ -51,7 +51,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="bg-[#3E485B] min-h-[60vh] md:min-h-[60vh] font-[Cambria] flex justify-center items-center">
+      <div className="bg-[#a5b4fc] min-h-[60vh] md:min-h-[60vh] font-[Cambria] flex justify-center items-center">
         <div className="flex flex-col justify-center items-center text-center sm:px-2 xs:p-3">
           <div className="mb-4">
             <h3 className="font-[Poppins] text-white font-medium">
@@ -78,14 +78,14 @@ const HomePage = () => {
           {user && company ? (
             <Link
            
-            className="w-full md:w-1/2 sm:w-1/2 py-2 bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:bg-red-600"
+            className="w-full md:w-1/2 sm:w-1/2 py-2 bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:bg-green-600"
           >
             Explore the site<i className="fa-solid fa-globe pl-2"></i>
           </Link>
           ) : (
             <Link
               to={"/add-company-form"}
-              className="w-full md:w-1/2 sm:w-1/2 py-2 bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              className="w-full md:w-1/2 sm:w-1/2 py-2 bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:bg-green-600"
             >
               List Your Company <i className="fa-solid fa-globe pl-2"></i>
             </Link>
@@ -99,12 +99,12 @@ const HomePage = () => {
             <div className="flex flex-wrap items-center pb-3">
               <FontAwesomeIcon
                 icon={faSearch}
-                className="pt-1 mr-2 bg-red-500 text-white p-1 text-[20px] font-bold rounded-full items-center"
+                className="pt-1 mr-2 bg-green-500 text-white p-1 text-[20px] font-bold rounded-full items-center"
               />
               <button className="font-bold text-[17px]">Featured</button>
             </div>
             <div className="flex flex-wrap justify-center">
-              {filteredCompanies.map((company) => (
+              {filtegreenCompanies.map((company) => (
                 <Link
                   key={company._id}
                   to={`/company-details/${company._id}`}
@@ -154,7 +154,7 @@ const HomePage = () => {
           <div className="flex flex-wrap items-center p-3">
             <FontAwesomeIcon
               icon={faNewspaper}
-              className="pt-1 mr-2 bg-red-500 text-white p-1 text-[20px] font-bold rounded-full items-center"
+              className="pt-1 mr-2 bg-green-500 text-white p-1 text-[20px] font-bold rounded-full items-center"
             />
             <button className="font-bold text-[17px]">Latest News</button>
           </div>
@@ -182,7 +182,7 @@ const HomePage = () => {
                       <Link
                         to={`/blog-details/${article._id}`}
                         key={index}
-                        className="text-red-500"
+                        className="text-green-500"
                       >
                         Read More
                       </Link>

@@ -120,7 +120,7 @@ const Navbar = () => {
                 )}
               </li>
             ))}
-            <li className="py-2 px-8 md:block rounded-[10px] text-white bg-red-500 w-fit ml-3">
+            <li className="py-2 px-8 md:block rounded-[10px] text-white bg-green-500 w-fit ml-3">
               {!user ? (
                 <Link to="/login" className="duration-500 text-[18px]">
                   LOGIN

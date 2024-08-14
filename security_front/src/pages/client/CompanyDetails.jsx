@@ -216,7 +216,7 @@ const CompanyDetails = () => {
                 />
               </div>
               <div className="pt-4 lg:w-5/6 md:w-3/5 items-stretch flex-col justify-between">
-                <h2 className="capitalize font-bold font-[Poppins] text-[37px] hover:text-[#F23F2D]">
+                <h2 className="capitalize font-bold font-[Poppins] text-[37px] hover:text-[#22c55e]">
                   {companyContent.name}
                 </h2>
                 <p className="capitalize font-normal font-[Poppins] text-[13px] text-[#56636A]  mr-2">
@@ -256,7 +256,7 @@ const CompanyDetails = () => {
                       ) : (
                         <button
                           onClick={handleClaimModel}
-                          className="  text-red-500 rounded-lg font-bold text-[17px] py-2 px-2 capitalize border border-red-500"
+                          className="  text-green-500 rounded-lg font-bold text-[17px] py-2 px-2 capitalize border border-green-500"
                         >
                           claim Company
                         </button>
@@ -300,7 +300,7 @@ const CompanyDetails = () => {
                           <hr className="mt-10" />
                           <button
                             onClick={openNewTab}
-                            className="text-[#F23F2D] border border-[#F23F2D] pl-3 pr-3 mt-3 p-1 rounded-md"
+                            className="text-[#22c55e] border border-[#22c55e] pl-3 pr-3 mt-3 p-1 rounded-md"
                           >
                             Learn More
                           </button>
@@ -428,11 +428,11 @@ const CompanyDetails = () => {
                 Revenue Stream
               </h2>
               <div className="flex flex-wrap m-4">
-                <button className="pr-4 pl-4 p-1 border-2 border-[#F23F2D] rounded-[50px] m-2">
+                <button className="pr-4 pl-4 p-1 border-2 border-[#22c55e] rounded-[50px] m-2">
                   <a
                     href="#"
                     target="_blank"
-                    className="text-[#F23F2D] capitalize"
+                    className="text-[#22c55e] capitalize"
                   >
                     {companyContent.revenueStream}
                   </a>
@@ -498,7 +498,7 @@ const CompanyDetails = () => {
                       key={funding._id}
                       className={`p-3 flex items-center cursor-pointer ${
                         activeTab === `round${index + 1}`
-                          ? "text-[#F23F2D] font-bold border-b-2 border-[#F23F2D] text-[20px]"
+                          ? "text-[#22c55e] font-bold border-b-2 border-[#22c55e] text-[20px]"
                           : "text-gray-500 text-[18px]"
                       }`}
                       onClick={() => setActiveTab(`round${index + 1}`)}

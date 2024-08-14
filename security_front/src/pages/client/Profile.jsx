@@ -87,7 +87,7 @@ const Profile = () => {
             <img
               src="images/logo/logo.png"
               alt="John Doe"
-              className="w-24 h-24 rounded-full mx-auto border border-red-500"
+              className="w-24 h-24 rounded-full mx-auto border border-green-500"
             />
             <div>
               <h2 className="text-xl font-semibold capitalize">
@@ -97,7 +97,7 @@ const Profile = () => {
               <p>{profileData.address}</p>
               <button
                 onClick={handleLogout}
-                className="bg-red-500  text-white px-4 py-2 rounded-lg font-bold mt-3"
+                className="bg-green-500  text-white px-4 py-2 rounded-lg font-bold mt-3"
               >
                 Logout
               </button>
@@ -178,7 +178,7 @@ const Profile = () => {
             </div>
             <button
               onClick={handleEditEnable}
-              className="absolute md:bottom-4 right-4 bg-red-500 text-white py-2 px-6 rounded font-bold"
+              className="absolute md:bottom-4 right-4 bg-green-500 text-white py-2 px-6 rounded font-bold"
             >
               {editProfile === false ? "Edit" : "Save"}
             </button>
@@ -189,7 +189,7 @@ const Profile = () => {
         {company === false ? (
           <Link
             to="/add-company-form"
-            className="bg-red-500 mb-8 w-full md:w-1/6 text-white py-2 px-4 rounded mx-auto"
+            className="bg-green-500 mb-8 w-full md:w-1/6 text-white py-2 px-4 rounded mx-auto"
           >
             List Your Company
           </Link>
@@ -206,7 +206,7 @@ const Profile = () => {
                 <button
                   className={`block w-full text-left py-4 px-2 hover:bg-gray-100 ${
                     activeTab === "companyInformation"
-                      ? "text-red-500 font-semibold border-l-4 border-red-500"
+                      ? "text-green-500 font-semibold border-l-4 border-green-500"
                       : ""
                   }`}
                   onClick={() => setActiveTab("companyInformation")}
@@ -216,7 +216,7 @@ const Profile = () => {
                 <button
                   className={`block w-full text-left py-4 px-2 hover:bg-gray-100 ${
                     activeTab === "productsServices"
-                      ? "text-red-500 font-semibold border-l-4 border-red-500"
+                      ? "text-green-500 font-semibold border-l-4 border-green-500"
                       : ""
                   }`}
                   onClick={() => setActiveTab("productsServices")}
@@ -226,7 +226,7 @@ const Profile = () => {
                 <button
                   className={`block w-full text-left py-4 px-2 hover:bg-gray-100 ${
                     activeTab === "basicInformation"
-                      ? "text-red-500 font-semibold border-l-4 border-red-500"
+                      ? "text-green-500 font-semibold border-l-4 border-green-500"
                       : ""
                   }`}
                   onClick={() => setActiveTab("basicInformation")}
@@ -236,7 +236,7 @@ const Profile = () => {
                 <button
                   className={`block w-full text-left py-4 px-2 hover:bg-gray-100 ${
                     activeTab === "timeline"
-                      ? "text-red-500 font-semibold border-l-4 border-red-500"
+                      ? "text-green-500 font-semibold border-l-4 border-green-500"
                       : ""
                   }`}
                   onClick={() => setActiveTab("timeline")}
@@ -246,7 +246,7 @@ const Profile = () => {
                 <button
                   className={`block w-full text-left py-4 px-2 hover:bg-gray-100 ${
                     activeTab === "market"
-                      ? "text-red-500 font-semibold border-l-4 border-red-500"
+                      ? "text-green-500 font-semibold border-l-4 border-green-500"
                       : ""
                   }`}
                   onClick={() => setActiveTab("market")}
@@ -256,7 +256,7 @@ const Profile = () => {
                 <button
                   className={`block w-full text-left py-4 px-2 hover:bg-gray-100 ${
                     activeTab === "funding"
-                      ? "text-red-500 font-semibold border-l-4 border-red-500"
+                      ? "text-green-500 font-semibold border-l-4 border-green-500"
                       : ""
                   }`}
                   onClick={() => setActiveTab("funding")}
@@ -272,7 +272,7 @@ const Profile = () => {
                 {renderTabContent(activeTab, companyContent)}
                 <Link
                   to={`/user-edit-company/${companyContent?._id}`}
-                  className="absolute md:bottom-4 right-4 bg-red-500 text-white py-2 px-6 font-bold rounded"
+                  className="absolute md:bottom-4 right-4 bg-green-500 text-white py-2 px-6 font-bold rounded"
                 >
                   Edit
                 </Link>
@@ -283,7 +283,7 @@ const Profile = () => {
       </div>
       {isLogout && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 m-2">
-          <div className="bg-red-100 p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 relative">
+          <div className="bg-green-100 p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 relative">
             <button
               onClick={handleCloseModal}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -302,13 +302,13 @@ const Profile = () => {
             </h2>
             <div className="flex justify-between">
               <button
-                className=" bg-red-500 text-white py-2 px-6 rounded font-bold"
+                className=" bg-green-500 text-white py-2 px-6 rounded font-bold"
                 onClick={handleCompleteLogout}
               >
                 Yes
               </button>
               <button
-                className="bg-red-500 text-white py-2 px-6 rounded font-bold"
+                className="bg-green-500 text-white py-2 px-6 rounded font-bold"
                 onClick={handleCloseModal}
               >
                 No

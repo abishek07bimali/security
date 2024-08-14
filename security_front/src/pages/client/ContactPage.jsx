@@ -257,7 +257,7 @@ function ContactPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 bg-[#F23F2D]"
+              className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 bg-[#22c55e]"
             >
               {loading ? "Sending..." : "Send"}
             </button>

@@ -211,7 +211,7 @@ const Login = () => {
             alt="VentureLed Logo"
             className="w-16 h-16"
           />
-          <h1 className="text-2xl font-bold text-red-500">VentureLed</h1>
+          <h1 className="text-2xl font-bold text-greeb-500">VentureLed</h1>
         </div>
         <h2 className="text-xl font-semibold text-center mb-6">
           Get Started with VentureLed
@@ -223,12 +223,12 @@ const Login = () => {
             value={emailLogin}
             onChange={(e) => setEmailLogin(e.target.value)}
             className={`w-full px-4 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1 ${
-              emailError ? "border-red-500" : ""
+              emailError ? "border-greeb-500" : ""
             }`}
             required
           />
           {emailError && (
-            <p className="text-red-500 text-center mt-1">{emailError}</p>
+            <p className="text-greeb-500 text-center mt-1">{emailError}</p>
           )}
           <input
             type="password"
@@ -237,12 +237,12 @@ const Login = () => {
             value={passwordLogin}
             onChange={(e) => setPasswordLogin(e.target.value)}
             className={`w-full px-4 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1 ${
-              passwordError ? "border-red-500" : ""
+              passwordError ? "border-greeb-500" : ""
             }`}
             required
           />
           {passwordError && (
-            <p className="text-red-500 text-center mt-1">{passwordError}</p>
+            <p className="text-green-500 text-center mt-1">{passwordError}</p>
           )}
              <div className="mt-6  w-full">
               <ReCAPTCHA
@@ -261,26 +261,26 @@ const Login = () => {
             <a
               href="#"
               onClick={handleForgotPasswordClick}
-              className="text-red-500 font-semibold"
+              className="text-green-500 font-semibold"
             >
               Forget Password?
             </a>
           </div>
           <button
             type="submit"
-            className="w-1/2 sm:w-1/3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-1 mx-auto block text-lg"
+            className="w-1/2 sm:w-1/3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-1 mx-auto block text-lg"
             disabled={isLoading}
           >
             {isLoading ? "Logging in..." : "Login"}
           </button>
           {loginError && (
-            <p className="text-red-500 text-center mt-2">{loginError}</p>
+            <p className="text-green-500 text-center mt-2">{loginError}</p>
           )}
         </form>
         <div className="flex justify-center items-center mt-4 text-sm">
           <span className="text-[15px]">
             Don’t have an account?{" "}
-            <a href="/register" className="text-red-500 font-semibold">
+            <a href="/register" className="text-green-500 font-semibold">
               Sign Up
             </a>
           </span>
@@ -325,7 +325,7 @@ const Login = () => {
               onClick={handleVerifyClick}
               className={`w-full py-2 ${
                 email
-                  ? "bg-red-500 hover:bg-red-600"
+                  ? "bg-green-500 hover:bg-green-600"
                   : "bg-gray-300 cursor-not-allowed"
               } text-white rounded-md focus:outline-none focus:ring-1 mb-2`}
               disabled={!email || isLoading}
@@ -363,7 +363,7 @@ const Login = () => {
                 Remembered account?{" "}
                 <button
                   onClick={handleCloseModal}
-                  className="text-red-500 font-semibold"
+                  className="text-green-500 font-semibold"
                 >
                   Login
                 </button>
@@ -401,7 +401,7 @@ const Login = () => {
             </div>
             <button
               onClick={handleOtpSubmit}
-              className="w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-1 mb-2"
+              className="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-1 mb-2"
             >
               Submit
             </button>
@@ -438,11 +438,11 @@ const Login = () => {
               required
             />
             {passwordMatchError && (
-              <p className="text-red-500 mb-4">{passwordMatchError}</p>
+              <p className="text-green-500 mb-4">{passwordMatchError}</p>
             )}
             <button
               onClick={handleSavePassword}
-              className="w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-1 mb-2"
+              className="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-1 mb-2"
             >
               Save Password
             </button>

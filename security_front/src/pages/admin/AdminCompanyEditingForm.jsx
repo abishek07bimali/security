@@ -314,7 +314,7 @@ const AdminCompanyEditingForm = () => {
                 key={index}
                 className={`py-2 px-[52px] border border-gray-500 ${
                   activeTab === index + 1
-                    ? "bg-[#F23F2D] text-white border border-[#F23F2D]"
+                    ? "bg-[#22c55e] text-white border border-[#22c55e]"
                     : "text-gray-700"
                 }`}
                 onClick={() => setActiveTab(index + 1)}
@@ -501,7 +501,7 @@ const AdminCompanyEditingForm = () => {
                 <button
                   type="button"
                   onClick={nextTab}
-                  className="bg-[#F23F2D] text-white px-4 py-2 rounded-md mt-2 w-full"
+                  className="bg-[#22c55e] text-white px-4 py-2 rounded-md mt-2 w-full"
                 >
                   Next
                 </button>
@@ -588,7 +588,7 @@ const AdminCompanyEditingForm = () => {
                           image: null,
                         }
                       )}
-                      className="bg-[#F23F2D] text-white px-3 py-[5px] rounded-md ml-2"
+                      className="bg-[#22c55e] text-white px-3 py-[5px] rounded-md ml-2"
                     >
                       +
                     </button>
@@ -601,7 +601,7 @@ const AdminCompanyEditingForm = () => {
                         "products",
                         index
                       )}
-                      className="bg-[#F23F2D] text-white px-3 py-[8px] rounded-md ml-2"
+                      className="bg-[#22c55e] text-white px-3 py-[8px] rounded-md ml-2"
                     >
                       <AiOutlineDelete />
                     </button>
@@ -612,7 +612,7 @@ const AdminCompanyEditingForm = () => {
                 <button
                   type="button"
                   onClick={nextTab}
-                  className="bg-[#F23F2D] text-white px-4 py-2 rounded-md mt-2 w-full"
+                  className="bg-[#22c55e] text-white px-4 py-2 rounded-md mt-2 w-full"
                 >
                   Next
                 </button>
@@ -642,7 +642,7 @@ const AdminCompanyEditingForm = () => {
                 <button
                   type="button"
                   onClick={nextTab}
-                  className="bg-[#F23F2D] text-white px-4 py-2 rounded-md mt-2 w-full"
+                  className="bg-[#22c55e] text-white px-4 py-2 rounded-md mt-2 w-full"
                 >
                   Next
                 </button>
@@ -747,7 +747,7 @@ const AdminCompanyEditingForm = () => {
                           image: null,
                         }
                       )}
-                      className="bg-[#F23F2D] text-white px-3 py-[5px] rounded-md ml-2"
+                      className="bg-[#22c55e] text-white px-3 py-[5px] rounded-md ml-2"
                     >
                       +
                     </button>
@@ -760,7 +760,7 @@ const AdminCompanyEditingForm = () => {
                         "timelines",
                         index
                       )}
-                      className="bg-[#F23F2D] text-white px-3 py-[8px] rounded-md ml-2"
+                      className="bg-[#22c55e] text-white px-3 py-[8px] rounded-md ml-2"
                     >
                       <AiOutlineDelete />
                     </button>
@@ -771,7 +771,7 @@ const AdminCompanyEditingForm = () => {
                 <button
                   type="button"
                   onClick={nextTab}
-                  className="bg-[#F23F2D] text-white px-4 py-2 rounded-md mt-2 w-full"
+                  className="bg-[#22c55e] text-white px-4 py-2 rounded-md mt-2 w-full"
                 >
                   Next
                 </button>
@@ -834,7 +834,7 @@ const AdminCompanyEditingForm = () => {
                 <button
                   type="button"
                   onClick={nextTab}
-                  className="bg-[#F23F2D] text-white px-4 py-2 rounded-md mt-2 w-full"
+                  className="bg-[#22c55e] text-white px-4 py-2 rounded-md mt-2 w-full"
                 >
                   Next
                 </button>
@@ -936,7 +936,7 @@ const AdminCompanyEditingForm = () => {
                           description: "",
                         }
                       )}
-                      className="bg-[#F23F2D] text-white px-3 py-[5px] rounded-md ml-2"
+                      className="bg-[#22c55e] text-white px-3 py-[5px] rounded-md ml-2"
                     >
                       +
                     </button>
@@ -949,7 +949,7 @@ const AdminCompanyEditingForm = () => {
                         "fundings",
                         index
                       )}
-                      className="bg-[#F23F2D] text-white px-3 py-[8px] rounded-md ml-2"
+                      className="bg-[#22c55e] text-white px-3 py-[8px] rounded-md ml-2"
                     >
                       <AiOutlineDelete />
                     </button>
@@ -958,7 +958,7 @@ const AdminCompanyEditingForm = () => {
               ))}
               <div className="mb-1 md:col-span-2">
                 <button
-                  className="bg-[#F23F2D] text-white px-4 py-2 rounded-md mt-2 w-full"
+                  className="bg-[#22c55e] text-white px-4 py-2 rounded-md mt-2 w-full"
                   type="submit"
                 >
                   Submit All Details
