@@ -124,6 +124,7 @@ const signupUser = async (req, res) => {
 //http://localhost:5000/api/user/login
 
 const loginUser = async (req, res) => {
+  console.log(req.body)
   
   try {
     const { email, password } = req.body;

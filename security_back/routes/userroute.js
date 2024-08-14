@@ -3,10 +3,10 @@ const router = require("express").Router();
 const userController = require("../controllers/userController");
 const connectionController = require("../controllers/connectionControllers");
 const otpController = require("../controllers/otpControllers");
-const { authGuard, authGuardAdmin,forgotPasswordLimiter } = require("../middleware/authGuard");
+const { authGuard, authGuardAdmin,forgotPasswordLimiter,verifyRecaptcha } = require("../middleware/authGuard");
 
 
-router.post("/login", userController.loginUser);
+router.post("/login",verifyRecaptcha, userController.loginUser);
 router.post("/signup", userController.signupUser);
 router.post('/verify_creation', otpController.verifyUser);
 router.post("/updateuser",authGuard, userController.updateUser);

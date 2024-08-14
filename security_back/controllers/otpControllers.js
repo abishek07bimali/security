@@ -60,6 +60,7 @@ const sendOTP = async (email, otp) => {
 const sendOTPMail = async (req, res) => {
   try {
     const { email } = req.body;
+    console.log(req.body)
 
     const user = await User.findOne({ email });
     if (!user) {
