@@ -25,6 +25,7 @@ const userSchema = new Schema({
   workDomain: String, //domain of the user sector eg: "Healthcare", "Education", "Construction & Real estate"
   isAdmin: { type: Boolean, default: false }, //admin true or false //yo just for testing, paxi milau hai 
   claimedCompany: [{ type: Schema.Types.ObjectId, ref: 'Company' }], //list of companies the user is employee of
+  oldPasswords: [{ type: String }], // Array to store previous 3 passwords
 });
 
 const User = mongoose.model('User', userSchema);

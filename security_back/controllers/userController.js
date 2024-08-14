@@ -50,7 +50,6 @@ const signupUser = async (req, res) => {
       });
     }
 
-    // Check if the user already exists and is verified
     const existingUser = await User.findOne({ email, isVerified: true });
     if (existingUser) {
       return res.json({
@@ -59,25 +58,27 @@ const signupUser = async (req, res) => {
       });
     }
 
-    // Check if the user exists but is not verified
     const unverifiedUser = await User.findOne({ email, isVerified: false });
     if (unverifiedUser) {
-      // Update the existing unverified user with the new details
       unverifiedUser.username = username;
       unverifiedUser.phone = phone;
       unverifiedUser.address = address;
-      unverifiedUser.password = await bcrypt.hash(password, 10);
 
-      // Save the updated unverified user
+      // Save the new password to the oldPasswords array and hash it
+      const hashedPassword = await bcrypt.hash(password, 10);
+      unverifiedUser.oldPasswords.push(unverifiedUser.password);
+      if (unverifiedUser.oldPasswords.length > 3) {
+        unverifiedUser.oldPasswords.shift(); // Keep only the last 3 passwords
+      }
+      unverifiedUser.password = hashedPassword;
+
       await unverifiedUser.save();
 
-      // Generate a new OTP and save it to the database
       const otp = Math.floor(1000 + Math.random() * 9000).toString();
       const timestamp = Date.now();
       const newOTP = new OTP({ email, otp, timestamp });
       await newOTP.save();
 
-      // Send OTP for verification
       await otpController.sendOTPRegistration(email, otp);
 
       return res.json({
@@ -87,8 +88,6 @@ const signupUser = async (req, res) => {
       });
     }
 
-    // Create a new user if the email does not exist
-    
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
@@ -96,17 +95,16 @@ const signupUser = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
+      oldPasswords: [hashedPassword], // Initialize oldPasswords with the current password
     });
 
     await newUser.save();
 
-    // Generate and save the OTP for the new user
     const otp = Math.floor(1000 + Math.random() * 9000).toString();
     const timestamp = Date.now();
     const newOTP = new OTP({ email, otp, timestamp });
     await newOTP.save();
 
-    // Send OTP for verification
     await otpController.sendOTPRegistration(email, otp);
 
     return res.json({
@@ -313,19 +311,41 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// API endpoint to verify OTP
 const savePassowrd = async (req, res) => {
   console.log(req.body);
   const { email, newPassword } = req.body;
 
   try {
+    // Find the user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.json({ success: false, message: "User not found" });
     }
 
+    // Check if the new password matches any of the previous three passwords
+    const isOldPassword = await Promise.all(
+      user.oldPasswords.map(async (oldPassword) => {
+        return await bcrypt.compare(newPassword, oldPassword);
+      })
+    );
+
+    if (isOldPassword.includes(true)) {
+      return res.json({
+        success: false,
+        message: "New password must not be the same as any of the last 3 passwords.",
+      });
+    }
+
+    // Hash the new password and update the user document
     const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
+    const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the oldPasswords array
+    user.oldPasswords.push(user.password);
+    if (user.oldPasswords.length > 3) {
+      user.oldPasswords.shift(); 
+    }
+    user.password = hashedNewPassword;
     await user.save();
 
     res.json({ success: true, message: "Password reset successfully" });
