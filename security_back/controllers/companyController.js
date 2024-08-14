@@ -72,10 +72,10 @@ const createCompany = async (req, res) => {
     const targetMarketDetail = JSON.parse(req.body.targetMarketDetail);
 
          // Validate the request body against the schema
-     const { error } = schema.validate(req.body);
-     if (error) {
-       return res.status(400).send(error.details);
-     }
+    //  const { error } = schema.validate(req.body);
+    //  if (error) {
+    //    return res.status(400).send(error.details);
+    //  }
 
     // Add image URLs to the parsed JSON objects
     if (req.files["companyImage"]) {
@@ -287,12 +287,12 @@ const updateCompany = async (req, res) => {
     const companyFundingDetails = JSON.parse(req.body.companyFundingDetails);
     const companyDetails = JSON.parse(req.body.companyDetails);
     const targetMarketDetail = JSON.parse(req.body.targetMarketDetail);
-    
+
     // Validate the request body against the schema
-    const { error } = schema.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details);
-    }
+    // const { error } = schema.validate(req.body);
+    // if (error) {
+    //   return res.status(400).send(error.details);
+    // }
 
     // Update image URLs to the parsed JSON objects if new images are uploaded
     if (req.files && req.files.companyImage) {
