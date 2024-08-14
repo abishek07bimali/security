@@ -125,8 +125,13 @@ const CompanyEditingForm = () => {
   };
 
   const validateForm = () => {
+    // Validate companyBasicDetails
     if (!companyBasicDetails.name) {
       toast.error("Company Name is required");
+      return false;
+    }
+    if (!companyBasicDetails.address) {
+      toast.error("Address is required");
       return false;
     }
     if (!companyBasicDetails.email) {
@@ -141,6 +146,10 @@ const CompanyEditingForm = () => {
       toast.error("Category is required");
       return false;
     }
+    if (!companyBasicDetails.companyDescription) {
+      toast.error("Company Description is required");
+      return false;
+    }
     if (!companyBasicDetails.website) {
       toast.error("Website is required");
       return false;
@@ -149,9 +158,79 @@ const CompanyEditingForm = () => {
       toast.error("Please enter a valid website URL.");
       return false;
     }
+  
+    // Validate companyProductDetails
+    for (const product of companyProductDetails.products) {
+      if (!product.name) {
+        toast.error("Product name is required");
+        return false;
+      }
+      if (!product.description) {
+        toast.error("Product description is required");
+        return false;
+      }
+    }
+  
+    // Validate companyTimelineDetails
+    for (const timeline of companyTimelineDetails.timelines) {
+      if (!timeline.name) {
+        toast.error("Timeline name is required");
+        return false;
+      }
+      if (!timeline.date) {
+        toast.error("Timeline date is required");
+        return false;
+      }
+      if (!timeline.description) {
+        toast.error("Timeline description is required");
+        return false;
+      }
+    }
+  
+    // Validate companyFundingDetails
+    for (const funding of companyFundingDetails.fundings) {
+      if (!funding.name) {
+        toast.error("Funding round name is required");
+        return false;
+      }
+      if (!funding.date) {
+        toast.error("Funding date is required");
+        return false;
+      }
+      if (!funding.amount || isNaN(funding.amount)) {
+        toast.error("Funding amount is required and must be a number");
+        return false;
+      }
+      if (!funding.description) {
+        toast.error("Funding description is required");
+        return false;
+      }
+    }
+  
+    // Validate companyDetails
+    if (!companyDetails.basicDescription) {
+      toast.error("Basic Description is required");
+      return false;
+    }
+  
+    // Validate targetMarketDetail
+    if (!targetMarketDetail.marketDescription) {
+      toast.error("Market Description is required");
+      return false;
+    }
+    if (!targetMarketDetail.businesstype) {
+      toast.error("Business type is required");
+      return false;
+    }
+    if (!targetMarketDetail.revenueStream) {
+      toast.error("Revenue Stream is required");
+      return false;
+    }
+  
+    // If all validations pass
     return true;
   };
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
