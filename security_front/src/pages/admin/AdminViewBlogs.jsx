@@ -5,7 +5,7 @@ import { FaEdit, FaTrash } from "react-icons/fa"; // Importing Font Awesome icon
 import { Link } from "react-router-dom"; // Importing Link for navigation
 import { Button } from "flowbite-react";
 import AddBlogs from "./AddBlogs";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const AdminViewBlogs = () => {
   const [savedContent, setSavedContent] = useState([]);

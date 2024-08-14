@@ -5,7 +5,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
@@ -60,8 +60,8 @@ function App() {
   return (
     <>
       {!isAdminRoute && <Navbar />}
-      <ToastContainer />
-      <Routes>
+      <Toaster position='top-right' />
+            <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<HomePage />} />

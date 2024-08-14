@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import ContentEditor from "../../component/ContentEditor";
 import AdminSideNav from "../../component/AdminSideNav";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { createCompanyApi } from "../../apis/api";
 
 const AdminCompanyAddingForm = () => {

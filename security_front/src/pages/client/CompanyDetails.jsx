@@ -7,7 +7,7 @@ import {
   getSingleCompanyApi,
 } from "../../apis/api";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const CompanyDetails = () => {
   const user = JSON.parse(localStorage.getItem("user"));

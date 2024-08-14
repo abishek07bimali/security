@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createContact } from "../../apis/api";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import ReCAPTCHA from "react-google-recaptcha";
 
 function ContactPage() {

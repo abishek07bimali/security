@@ -7,7 +7,7 @@ import {
 } from "../../apis/api";
 import AdminSideNav from "../../component/AdminSideNav";
 import { FaEdit, FaTrash } from "react-icons/fa"; // Importing Font Awesome icons
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const AdminAllClaims = () => {
   const [savedContent, setSavedContent] = useState([]);

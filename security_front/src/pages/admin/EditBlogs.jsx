@@ -6,7 +6,7 @@ import {
   getWorkDomainApi,
   updatetBlogsApi,
 } from "../../apis/api";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import AdminSideNav from "../../component/AdminSideNav";
 import { useParams,useNavigate } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createUserAccount, verifyUserAccount } from "../../apis/api";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
   const [formData, setFormData] = useState({

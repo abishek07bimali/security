@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import ContentEditor from "../../component/ContentEditor";
 import AdminSideNav from "../../component/AdminSideNav";
 import { AiOutlineDelete } from "react-icons/ai";

@@ -3,7 +3,7 @@ import { deleteBlogsApi, getAllContact, getBlogsApi } from "../../apis/api";
 import AdminSideNav from "../../component/AdminSideNav";
 import { FaEdit, FaTrash } from "react-icons/fa"; // Importing Font Awesome icons
 import { Link } from "react-router-dom"; // Importing Link for navigation
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const AdminViewContact = () => {
   const [savedContent, setSavedContent] = useState([]);

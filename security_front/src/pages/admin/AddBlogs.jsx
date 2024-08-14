@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ContentEditor from "../../component/ContentEditor";
 import { createBlogApi, getWorkDomainApi } from "../../apis/api";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import AdminSideNav from "../../component/AdminSideNav";
 
 const AddBlogs = ({ onBlogAdded }) => {
