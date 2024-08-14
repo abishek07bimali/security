@@ -57,14 +57,15 @@ const Login = () => {
   };
 
   const handleVerifyClick = async () => {
-    // if (!captchaToken) {
-    //   toast.error("Please complete the CAPTCHA");
-    //   return;
-    // }
+    if (!captchaToken) {
+      toast.error("Please complete the CAPTCHA");
+      return;
+    }
+    const token = await captchaToken.executeAsync();
 
     setIsLoading(true);
     try {
-      const response = await verifyEmailForget({ email });
+      const response = await verifyEmailForget({ email, recaptchaToken: token });
       if (!response.data.success) {
         toast.error(response.data.message);
       } else {
@@ -124,6 +125,12 @@ const Login = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    if (!captchaToken) {
+      toast.error("Please complete the CAPTCHA");
+      return;
+    }
+    const token = await captchaToken.executeAsync();
+
 
     // Validate email and password
     const isEmailValid = validateEmail(emailLogin);
@@ -150,6 +157,7 @@ const Login = () => {
       const response = await createLoginAccount({
         email: emailLogin,
         password: passwordLogin,
+        recaptchaToken: token
       });
       if (!response.data.success) {
         toast.error(response.data.message || "Invalid email or password");
@@ -236,6 +244,13 @@ const Login = () => {
           {passwordError && (
             <p className="text-red-500 text-center mt-1">{passwordError}</p>
           )}
+             <div className="mt-6  w-full">
+              <ReCAPTCHA
+                sitekey="6LfrjiUqAAAAAJbLINUKVlWJelSmkleQUfaDF2A2"  // Replace with your reCAPTCHA v3 Site Key
+                size="invisible"
+                ref={(el) => setCaptchaToken(el)}
+              />
+            </div>
           <div className="flex items-center">
             <input type="checkbox" id="remember" className="mr-2" />
             <label htmlFor="remember" className="text-sm">
@@ -299,11 +314,13 @@ const Login = () => {
               className="w-full px-4 py-2 mb-4 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
               required
             />
-            {/* <ReCAPTCHA
-              sitekey="6LeDwR4qAAAAAPcoRF7ahbTbetwB01Y2aRvwvMve"
-              onChange={handleCaptchaChange}
-              
-            /> */}
+            <div className="mt-6  w-full">
+              <ReCAPTCHA
+                sitekey="6LfrjiUqAAAAAJbLINUKVlWJelSmkleQUfaDF2A2"  // Replace with your reCAPTCHA v3 Site Key
+                size="invisible"
+                ref={(el) => setCaptchaToken(el)}
+              />
+            </div>
             <button
               onClick={handleVerifyClick}
               className={`w-full py-2 ${

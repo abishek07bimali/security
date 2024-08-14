@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createContact } from "../../apis/api";
 import { toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function ContactPage() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ function ContactPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   const validateFullName = (name) => {
     const fullNameRegex = /^[a-zA-Z\s]+$/;
@@ -60,11 +62,13 @@ function ContactPage() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setFormData({
+      
       ...formData,
       [name]: value,
+
     });
   };
 
@@ -73,10 +77,23 @@ function ContactPage() {
     if (!validateForm()) {
       return;
     }
+    if (!captchaToken) {
+      toast.error("Please complete the CAPTCHA");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      createContact(formData).then((response) => {
+      const token = await captchaToken.executeAsync(); // Generate CAPTCHA token
+
+      const updatedFormData = {
+        ...formData,
+        captchaToken: token, 
+      };
+
+
+      createContact(updatedFormData).then((response) => {
         if (response.data.success) {
           toast.success(response.data.message);
           setFormData({
@@ -230,6 +247,13 @@ function ContactPage() {
                 <p className="text-red-500 text-sm">{error.message}</p>
               )}
             </div>
+            {/* <div className="mt-6  w-full"> */}
+              <ReCAPTCHA
+                sitekey="6LfrjiUqAAAAAJbLINUKVlWJelSmkleQUfaDF2A2"  // Replace with your reCAPTCHA v3 Site Key
+                size="invisible"
+                ref={(el) => setCaptchaToken(el)}
+              />
+            {/* </div> */}
             <button
               type="submit"
               disabled={loading}
