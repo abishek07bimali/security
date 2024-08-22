@@ -44,6 +44,12 @@ const AdminSideNav = (props) => {
       link: "/admin-view-contact",
     },
     {
+      name: "User Logs",
+      icon: "fas fa-file",
+      id: "userlogs",
+      link: "/admin-view-user-logs",
+    },
+    {
       name: "My Account",
       icon: "fas fa-user",
       id: "account",

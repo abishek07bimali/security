@@ -92,6 +92,8 @@ export const createContact = (data) =>
   Api.post("/api/contact/create_contact", data);
 export const getAllContact = (data) =>
   Api.get("/api/contact/get_contact", data);
+export const deleteContactApi = (id, data) =>
+  ApiWithFormData.put(`/api/contact/admin_delete_contact/${id}`, data, config);
 
 export const claimCompanyApi = (data) =>
   ApiWithFormData.post("/api/claim/company-claims", data, config);
@@ -100,3 +102,8 @@ export const verifyClaimCOmpany = (id, data) =>
   Api.put(`/api/claim/verify-claim/${id}`, data, config);
 export const rejectClaimCompany = (id, data) =>
   Api.put(`/api/claim/reject-claim/${id}`, data, config);
+
+
+
+export const getAlluserLogs = () =>
+  Api.get("/api/user/check-user-logs",config);

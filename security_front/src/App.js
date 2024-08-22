@@ -35,6 +35,7 @@ import AdminViewContact from "./pages/admin/AdminViewContact";
 import Help from "./pages/client/Help";
 import AdminAllClaims from "./pages/admin/AdminAllClaims";
 import CompanyEditingForm from "./pages/client/CompanyEditingForm";
+import AdminViewUserLogs from "./pages/admin/AdminViewUserLogs.jsx";
 
 function App() {
   const location = useLocation();
@@ -50,6 +51,7 @@ function App() {
     "/admin-view-companies",
     "/admin-profile",
     "/admin-view-contact",
+    "/admin-view-user-logs"
   ];
 
   const isAdminRoute =
@@ -97,6 +99,7 @@ function App() {
           />
           <Route path="/admin-profile" element={<AdminProfile />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin-view-user-logs" element={<AdminViewUserLogs />} />
         </Route>
       </Routes>
       {!isAdminRoute && <Footer />}

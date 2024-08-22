@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { deleteBlogsApi, getAllContact, getBlogsApi } from "../../apis/api";
+import { deleteBlogsApi, deleteContactApi, getAllContact, getBlogsApi } from "../../apis/api";
 import AdminSideNav from "../../component/AdminSideNav";
 import { FaEdit, FaTrash } from "react-icons/fa"; // Importing Font Awesome icons
 import { Link } from "react-router-dom"; // Importing Link for navigation
@@ -27,7 +27,7 @@ const AdminViewContact = () => {
   // };
 
   const handleDelete = (id) => {
-    deleteBlogsApi(id)
+    deleteContactApi(id)
       .then((res) => {
         if (res.status === 200) {
           toast.success("Blog deleted successfully");
