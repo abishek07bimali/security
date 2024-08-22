@@ -3,6 +3,7 @@ const router = require("express").Router();
 const userController = require("../controllers/userController");
 const connectionController = require("../controllers/connectionControllers");
 const otpController = require("../controllers/otpControllers");
+const userlogController = require("../controllers/activityLogController");
 const { authGuard, authGuardAdmin,forgotPasswordLimiter,verifyRecaptcha } = require("../middleware/authGuard");
 
 
@@ -21,6 +22,7 @@ router.post("/createconnection", authGuard, connectionController.createConnectio
 router.get("/viewallconnections", connectionController.viewAllConnections);
 
 router.get("/check-admin", authGuardAdmin, userController.checkAdmin);
+router.get("/check-user-logs", authGuardAdmin, userlogController.getAllUserLogsByAdmin);
 
 
 

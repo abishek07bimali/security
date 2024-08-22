@@ -1,4 +1,6 @@
 const ActivityLog = require('../model/activityLog');
+const User = require("../model/user_model");
+
 
 const logActivity = async (user, action, ipAddress, additionalInfo = {}) => {
 
@@ -17,4 +19,19 @@ const logActivity = async (user, action, ipAddress, additionalInfo = {}) => {
   }
 };
 
-module.exports = logActivity;
+const getAllUserLogsByAdmin=async(req,res)=>{
+  try {
+    const activityLogs = await ActivityLog.find()
+      .populate('user', '-password') 
+      .sort({ timestamp: -1 }); 
+
+    res.status(200).json({
+      success: true,
+      activityLogs,
+    });
+  } catch (error) {
+    console.error('Error fetching activity logs:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+}
+module.exports = {logActivity,getAllUserLogsByAdmin};

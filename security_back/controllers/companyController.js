@@ -2,6 +2,8 @@ const { json } = require("express");
 const Company = require("../model/company_model");
 const User = require("../model/user_model");
 const Joi = require('joi');
+const logActivity = require('./activityLogController'); // Import the logActivity function
+
 
 const createCompany = async (req, res) => {
   console.log(req.body);
@@ -108,6 +110,9 @@ const createCompany = async (req, res) => {
     });
 
     await newCompany.save();
+     // save activity
+     await logActivity(req.user._id, 'created company', req.ip);
+
     console.log(req.user)
     if (!req.user.isAdmin) {
       await User.findByIdAndUpdate(req.user._id, {

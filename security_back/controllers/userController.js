@@ -8,7 +8,8 @@ const cloudinary = require("cloudinary").v2;
 const nodemailer = require("nodemailer");
 const otpController = require("../controllers/otpControllers");
 const OTP = require("../model/otpModel");
-const logActivity = require('./activityLogController'); // Import the logActivity function
+const logActivity = require('../controllers/activityLogController'); 
+const Joi = require('joi');
 
 
 // Create a nodemailer transporter
@@ -39,8 +40,31 @@ const sendMessage = async (email) => {
 };
 
 
+const signupSchema = Joi.object({
+  username: Joi.string().min(3).max(30).required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).required(),
+  phone: Joi.string().pattern(/^[0-9]{10}$/).required(), // Example pattern for a 10-digit phone number
+  address: Joi.string().min(3).max(100).required(),
+});
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(4).required(),
+  recaptchaToken:Joi.string()
+});
+
 const signupUser = async (req, res) => {
   console.log(req.body);
+
+  // Validate the request body against the Joi schema
+  const { error } = signupSchema.validate(req.body);
+  if (error) {
+    return res.json({
+      success: false,
+      message: "Form validation Failed"
+    });
+  }
+
   try {
     const { username, email, password, phone, address } = req.body;
 
@@ -128,6 +152,14 @@ const signupUser = async (req, res) => {
 const loginUser = async (req, res) => {
   console.log(req.body)
   
+  const { error } = loginSchema.validate(req.body);
+  if (error) {
+    return res.json({
+      success: false,
+      message: "Form validation Failed"
+    });
+  }
+
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -179,7 +211,7 @@ const loginUser = async (req, res) => {
     user.loginAttempt = 0;
     user.lockUntil = undefined;
     await user.save();
-
+    
     const token = jwt.sign(
       // { email: user.email, isAdmin: user.isAdmin, _id: user._id },
       { email: user.email, _id: user._id },
