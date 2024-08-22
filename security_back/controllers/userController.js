@@ -8,6 +8,7 @@ const cloudinary = require("cloudinary").v2;
 const nodemailer = require("nodemailer");
 const otpController = require("../controllers/otpControllers");
 const OTP = require("../model/otpModel");
+const logActivity = require('./activityLogController'); // Import the logActivity function
 
 
 // Create a nodemailer transporter
@@ -99,6 +100,9 @@ const signupUser = async (req, res) => {
     });
 
     await newUser.save();
+    // save activity
+    await logActivity(newUser, 'signup', req.ip);
+
 
     const otp = Math.floor(1000 + Math.random() * 9000).toString();
     const timestamp = Date.now();
@@ -144,6 +148,8 @@ const loginUser = async (req, res) => {
 
     // Check if the account is locked
     if (user.lockUntil && user.lockUntil > Date.now()) {
+      await logActivity(user, 'account locked for the user.', req.ip);
+
       return res.json({
         success: false,
         message: "Account locked. Try again later.",
@@ -151,6 +157,8 @@ const loginUser = async (req, res) => {
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
+      console.log(user)
+      await logActivity(user, 'failed_login', req.ip);
       user.loginAttempt = user.loginAttempt + 1;
 
       if (user.loginAttempt >= 3) {
@@ -166,7 +174,7 @@ const loginUser = async (req, res) => {
         return res.json({ success: false, message: "Invalid credentials" });
       }
     }
-
+    await logActivity(user, 'login', req.ip);
     // Reset login attempts on successful login
     user.loginAttempt = 0;
     user.lockUntil = undefined;
@@ -330,6 +338,7 @@ const savePassowrd = async (req, res) => {
     );
 
     if (isOldPassword.includes(true)) {
+      await logActivity(user, 'Tried changing passowrd with old password', req.ip);
       return res.json({
         success: false,
         message: "New password must not be the same as any of the last 3 passwords.",
@@ -347,6 +356,8 @@ const savePassowrd = async (req, res) => {
     }
     user.password = hashedNewPassword;
     await user.save();
+    // track activity
+    await logActivity(user, 'changed password', req.ip);
 
     res.json({ success: true, message: "Password reset successfully" });
   } catch (error) {

@@ -2,6 +2,8 @@
 
 const { body, validationResult } = require("express-validator");
 const Contact = require("../model/contactModel");
+const logActivity = require('./activityLogController'); // Import the logActivity function
+
 
 // Validation middleware for the contact creation 
 const validateContact = [
