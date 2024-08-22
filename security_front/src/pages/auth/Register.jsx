@@ -14,6 +14,9 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [addressError, setAddressError] = useState("");
   const [isOTPModalOpen, setIsOTPModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,6 +32,18 @@ const Register = () => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     return passwordRegex.test(password);
   };
+  const validatePhone = (phone) => {
+    const phoneRegex = /^[0-9]{10}$/; 
+    return phoneRegex.test(phone);
+  };
+  
+  const validateUsername = (username) => {
+    return username.trim().length >=5; 
+  };
+  
+  const validateAddress = (address) => {
+    return address.trim().length >= 2; 
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +58,9 @@ const Register = () => {
     // Validate email and password
     const isEmailValid = validateEmail(formData.email);
     const isPasswordValid = validatePassword(formData.password);
+    const isPhoneValid = validatePhone(formData.phone);
+    const isUsernameValid = validateUsername(formData.username);
+    const isAddressValid = validateAddress(formData.address);
 
     if (!isEmailValid) {
       setEmailError("Please enter a valid email address.");
@@ -58,6 +76,26 @@ const Register = () => {
       return;
     } else {
       setPasswordError("");
+    }
+    if (!isPhoneValid) {
+      setPhoneError("Please enter a valid 10-digit phone number.");
+    } else {
+      setPhoneError("");
+    }
+  
+    if (!isUsernameValid) {
+      setUsernameError("Username must be at least 3 characters long.");
+    } else {
+      setUsernameError("");
+    }
+  
+    if (!isAddressValid) {
+      setAddressError("Address must be at least 2 characters long.");
+    } else {
+      setAddressError("");
+    }
+    if (!isEmailValid || !isPasswordValid || !isPhoneValid || !isUsernameValid || !isAddressValid) {
+      return; // Don't submit the form if any field is invalid
     }
 
     setLoading(true);
@@ -138,6 +176,9 @@ const Register = () => {
             className="w-full px-4 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
             required
           />
+           {usernameError && (
+    <p className="text-red-500 text-center mt-1">{usernameError}</p>
+  )}
           <input
             type="email"
             name="email"
@@ -147,6 +188,10 @@ const Register = () => {
             className="w-full px-4 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
             required
           />
+          {emailError && (
+    <p className="text-red-500 text-center mt-1">{emailError}</p>
+  )}
+
           <input
             type="number"
             name="phone"
@@ -156,6 +201,9 @@ const Register = () => {
             className="w-full px-4 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
             required
           />
+           {phoneError && (
+    <p className="text-red-500 text-center mt-1">{phoneError}</p>
+  )}
           <input
             type="text"
             name="address"
@@ -165,6 +213,9 @@ const Register = () => {
             className="w-full px-4 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-1"
             required
           />
+           {addressError && (
+    <p className="text-red-500 text-center mt-1">{addressError}</p>
+  )}
           <input
             type="password"
             name="password"
@@ -176,15 +227,9 @@ const Register = () => {
             }`}
             required
           />
-          {passwordError && (
-            <p className="text-green-500 text-center mt-1">{passwordError}</p>
-          )}
-          {/* <div className="flex items-center"> */}
-          {/* <input type="checkbox" id="remember" className="mr-2" />
-            <label htmlFor="remember" className="text-sm">
-              Remember Password
-            </label>
-          </div> */}
+           {passwordError && (
+    <p className="text-red-500 text-center mt-1">{passwordError}</p>
+  )}
           <button
             type="submit"
             className="w-1/3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-1 mx-auto block text-[20px]"
@@ -192,7 +237,7 @@ const Register = () => {
           >
             {loading ? "Signing up..." : "Signup"}
           </button>
-          {error && <p className="text-green-500 text-center mt-4">{error}</p>}
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
           <p className="font-normal text-center mt-4">
             By signing up, I agree to the{" "}
             <a href="#" className="text-green-500 font-semibold">
