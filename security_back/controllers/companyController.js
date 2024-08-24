@@ -111,7 +111,7 @@ const createCompany = async (req, res) => {
 
     await newCompany.save();
      // save activity
-     await logActivity(req.user._id, 'created company', req.ip);
+    //  await logActivity(req.user._id, 'created company', req.ip);
 
     console.log(req.user)
     if (!req.user.isAdmin) {

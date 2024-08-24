@@ -8,7 +8,7 @@ const cloudinary = require("cloudinary").v2;
 const nodemailer = require("nodemailer");
 const otpController = require("../controllers/otpControllers");
 const OTP = require("../model/otpModel");
-const logActivity = require('../controllers/activityLogController'); 
+const { logActivity } = require('../controllers/activityLogController');
 const Joi = require('joi');
 
 
@@ -150,7 +150,7 @@ const signupUser = async (req, res) => {
 //http://localhost:5000/api/user/login
 
 const loginUser = async (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
   
   const { error } = loginSchema.validate(req.body);
   if (error) {
@@ -206,12 +206,12 @@ const loginUser = async (req, res) => {
         return res.json({ success: false, message: "Invalid credentials" });
       }
     }
-    await logActivity(user, 'login', req.ip);
     // Reset login attempts on successful login
     user.loginAttempt = 0;
     user.lockUntil = undefined;
     await user.save();
     
+    await logActivity(user, 'login', req.ip);
     const token = jwt.sign(
       // { email: user.email, isAdmin: user.isAdmin, _id: user._id },
       { email: user.email, _id: user._id },
@@ -221,7 +221,7 @@ const loginUser = async (req, res) => {
     // Remove password from the user object
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
-
+    
     res.json({
       success: true,
       message: "Login success",
