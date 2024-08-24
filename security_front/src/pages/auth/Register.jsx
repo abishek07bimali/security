@@ -158,13 +158,13 @@ const Register = () => {
         <div className="flex flex-col items-center mb-6">
           <img
             src="/images/logo/logo.png"
-            alt="VentureLed Logo"
+            alt="BusinessOne Logo"
             className="w-16 h-16"
           />
-          <h1 className="text-2xl font-bold text-green-500">VentureLed</h1>
+          <h1 className="text-2xl font-bold text-green-500">BusinessOne</h1>
         </div>
         <h2 className="text-xl font-semibold text-center mb-6">
-          Get Started with Ventureled
+          Get Started with BusinessOne
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4 justify-center">
           <input
@@ -270,7 +270,7 @@ const Register = () => {
             <div className="flex flex-col items-center mb-6">
               <img
                 src="/images/logo/logo.png"
-                alt="VentureLed Logo"
+                alt="BusinessOne Logo"
                 className="w-16 h-16"
               />
             </div>

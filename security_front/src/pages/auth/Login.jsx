@@ -208,13 +208,13 @@ const Login = () => {
         <div className="flex flex-col items-center mb-6">
           <img
             src="/images/logo/logo.png"
-            alt="VentureLed Logo"
+            alt="BusinessOne Logo"
             className="w-16 h-16"
           />
-          <h1 className="text-2xl font-bold text-greeb-500">VentureLed</h1>
+          <h1 className="text-2xl font-bold text-greeb-500">BusinessOne</h1>
         </div>
         <h2 className="text-xl font-semibold text-center mb-6">
-          Get Started with VentureLed
+          Get Started with BusinessOne
         </h2>
         <form onSubmit={handleLoginSubmit} className="space-y-4">
           <input
@@ -299,7 +299,7 @@ const Login = () => {
             <div className="flex flex-col items-center mb-6">
               <img
                 src="/images/logo/logo.png"
-                alt="VentureLed Logo"
+                alt="BusinessOne Logo"
                 className="w-16 h-16"
               />
             </div>

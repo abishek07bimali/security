@@ -41,7 +41,7 @@ const ClaimProfile = ({ handleCloseModal, handleSubmit }) => {
       <div className="flex flex-col items-center mb-6">
         <img
           src="/images/logo/logo.png"
-          alt="VentureLed Logo"
+          alt="BusinessOne Logo"
           className="w-16 h-16"
         />
       </div>
