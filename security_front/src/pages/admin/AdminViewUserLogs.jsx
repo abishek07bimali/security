@@ -48,9 +48,9 @@ const AdminViewUserLogs = () => {
                   <tr key={contact._id} className="hover:bg-gray-100">
                     <td className="px-2 py-4 border-b">{index + 1}</td>
 
-                    <td className="px-2 py-4 border-b">{contact.user._id}</td>
-                    <td className="px-2 py-4 border-b">{contact.user.username}</td>
-                    <td className="px-2 py-4 border-b">{contact.user.email}</td>
+                    <td className="px-2 py-4 border-b">{contact.user?._id}</td>
+                    <td className="px-2 py-4 border-b">{contact.user?.username}</td>
+                    <td className="px-2 py-4 border-b">{contact.user?.email}</td>
                     <td className="px-2 py-4 border-b">{contact.action}</td>
                     <td className="px-2 py-4 border-b">{contact.ipAddress}</td>
                     <td className="px-2 py-4 border-b">
