@@ -221,7 +221,10 @@ const loginUser = async (req, res) => {
     // Remove password from the user object
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
-    
+    delete userWithoutPassword.oldPasswords;
+    delete userWithoutPassword.isLocked;
+    delete userWithoutPassword.isVerified;
+    delete userWithoutPassword.loginAttempt;    
     res.json({
       success: true,
       message: "Login success",
